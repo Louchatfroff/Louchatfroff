@@ -82,7 +82,7 @@ dep_install() {
     curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor --yes -o /etc/apt/keyrings/docker.gpg
 
     echo \
-      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/$OS \
+      "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/download.docker.com.gpg] https://download.docker.com/linux/$OS \
       $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list >/dev/null
     ;;
 
