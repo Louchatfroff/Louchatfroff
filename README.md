@@ -1,9 +1,6 @@
-- 👋 Hi, I’m @Louchatfroff
-- 👀 I’m interested in software dev and optimisation
-- 📶 I'm fond of multiple hard/niche hobbies
-- 📫 How to reach me: https://louchat.neurallab.ovh/
-
-<!---
-Louchatfroff/Louchatfroff is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+- Hi, I’m @Louchatfroff
+- I’m interested in operating system modification and maintaining servers
+- I'm fond of multiple hard/niche hobbies, hmu if you like technical shit
+- Before everything, im mainly a big big gamer :)
+- I love making futile, but fun projects
+- How to reach me: https://louchat.neurallab.ovh/
