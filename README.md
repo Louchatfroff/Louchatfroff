@@ -3,4 +3,4 @@
 - I'm fond of multiple hard/niche hobbies, hmu if you like technical shit
 - Before everything, im mainly a big big gamer :)
 - I love making futile, but fun projects
-- How to reach me: https://louchat.neurallab.ovh/
+- How to reach me: https://louchat.site/
