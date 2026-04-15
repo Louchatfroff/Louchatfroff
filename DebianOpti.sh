@@ -430,55 +430,6 @@ mount /run/scpsl-tmp     2>/dev/null || true
 log "tmpfs monté pour /tmp, logs Minecraft et SCPSL"
 
 
-section "9. CPU GOVERNOR + C-STATES DÉSACTIVÉS"
-
-for CPU in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
-    echo performance > "$CPU" 2>/dev/null || true
-done
-
-for CPU_ID in $(seq 0 "$LAST_CORE"); do
-    CSTATE_PATH="/sys/devices/system/cpu/cpu${CPU_ID}/cpuidle"
-    if [[ -d "$CSTATE_PATH" ]]; then
-        for state in "$CSTATE_PATH"/state*/; do
-            STATE_NAME=$(cat "${state}name" 2>/dev/null || echo "")
-            if [[ "$STATE_NAME" != "POLL" && "$STATE_NAME" != "C0" && "$STATE_NAME" != "C1" ]]; then
-                echo 1 > "${state}disable" 2>/dev/null || true
-            fi
-        done
-    fi
-done
-
-cat > /etc/systemd/system/disable-cstates.service << 'EOF'
-[Unit]
-Description=Disable CPU C-States > C1
-After=local-fs.target
-
-[Service]
-Type=oneshot
-RemainAfterExit=yes
-ExecStart=/bin/sh -c '
-for CPU_ID in $(seq 0 $(( $(nproc) - 1 )) ); do
-  for state in /sys/devices/system/cpu/cpu${CPU_ID}/cpuidle/state*/; do
-    name=$(cat ${state}name 2>/dev/null || echo "")
-    case "$name" in
-      POLL|C0|C1) ;;
-      *) echo 1 > ${state}disable 2>/dev/null || true ;;
-    esac
-  done
-done
-for g in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
-  echo performance > "$g" 2>/dev/null || true
-done
-'
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-systemctl enable --now disable-cstates.service
-log "C-states > C1 désactivés, governor=performance"
-
-
 section "10. RÉSEAU NIC AVANCÉ"
 
 NIC=$(ip route | grep default | awk '{print $5}' | head -1)
